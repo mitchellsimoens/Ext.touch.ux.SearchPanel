@@ -13,9 +13,8 @@ $people = array(
     array('firstName' => 'Jay',      'lastName' => 'Robinson')
 );
 
-$filters = $_REQUEST['filter'];
-
-if ($filters) {
+if (isset($_REQUEST['filter'])) {
+    $filters = str_replace('\\', '', $_REQUEST['filter']);
     $filters = json_decode($filters);
 }
 
@@ -23,22 +22,22 @@ if (!$filters) {
     $return = $people;
 } else {
     $return = array();
-}
+    
+    foreach ($people as $person) {
+        $add = false;
 
-foreach ($people as $person) {
-    $add = false;
+        foreach ($filters as $filter) {
+            $field = $filter->property;
+            $value = $filter->value;
 
-    foreach ($filters as $filter) {
-        $field = $filter->property;
-        $value = $filter->value;
-
-        if (stripos($person[$field], $value) !== false) {
-            $add = true;
+            if (stripos($person[$field], $value) !== false) {
+                $add = true;
+            }
         }
-    }
 
-    if ($add) {
-        array_push($return, $person);
+        if ($add) {
+            array_push($return, $person);
+        }
     }
 }
 
