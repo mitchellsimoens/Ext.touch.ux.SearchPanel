@@ -67,7 +67,6 @@ Ext.setup({
                     searchFields : ['lastName', 'firstName'],
 
                     fieldConfig  : {
-                        height      : 45,
                         placeHolder : 'Search...'
                     },
 

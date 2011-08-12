@@ -1,14 +1,37 @@
 Ext.ns('Ext.touch.ux');
 
 Ext.touch.ux.SearchPanel = Ext.extend(Ext.Panel, {
-    layout : {
-        type  : 'vbox',
-        align : 'stretch'
-    },
+    layout : 'fit',
 
     /**
      * @cfg {String} mode
      * The mode of the {@link Ext.data.Store} ('local' or 'remote'). Defaults to remoteFilter on {@link Ext.data.Store}
+     */
+    /**
+     * @cfg {Object} dockConfig
+     * A configuration Object of {@link Ext.Toolbar} that will hold the field.
+     * Defaults to:
+     * {
+     *     xtype : 'toolbar',
+     *     dock  : 'top'
+     * }
+     */
+    /**
+     * @cfg {Object} fieldConfig
+     * A configuration Object of {@link Ext.form.Text}.
+     * Defaults to:
+     * {
+     *     xtype : 'textfield',
+     *     flex  : 1
+     * }
+     */
+    /**
+     * @cfg {Object} listConfig
+     * A configuration Object of {@link Ext.List}.
+     * Defaults to:
+     * {
+     *     xtype : 'list'
+     * }
      */
     /**
      * @cfg {Array} searchFields
@@ -25,7 +48,8 @@ Ext.touch.ux.SearchPanel = Ext.extend(Ext.Panel, {
         );
 
         Ext.apply(me, {
-            items : me.buildItems()
+            dockedItems : me.buildDocks(),
+            items       : me.buildItems()
         });
 
         Ext.touch.ux.SearchPanel.superclass.initComponent.call(me);
@@ -38,25 +62,35 @@ Ext.touch.ux.SearchPanel = Ext.extend(Ext.Panel, {
         me.getField().on('keyup', me.handleTextChange, me);
     },
 
-    buildItems: function() {
+    buildDocks: function() {
         var me    = this,
-            field = me.fieldConfig || {},
-            list  = me.listConfig || {};
+            dock  = me.dockConfig || {},
+            field = me.fieldConfig || {};
 
         Ext.applyIf(field, {
             xtype     : 'textfield',
+            flex      : 1,
             lastValue : ''
         });
 
-        Ext.applyIf(list, {
-            xtype : 'list',
-            flex  : 1
+        Ext.applyIf(dock, {
+            xtype : 'toolbar',
+            dock  : 'top',
+            items : field
         });
 
-        return [
-            field,
-            list
-        ];
+        return dock;
+    },
+
+    buildItems: function() {
+        var me   = this,
+            list = me.listConfig || {};
+
+        Ext.applyIf(list, {
+            xtype : 'list'
+        });
+
+        return list;
     },
 
     onBeforeSearch: function(panel, field, newValue, oldValue) {
