@@ -1,6 +1,7 @@
 <?php
 
 $people = array(
+    array('firstName' => 'Danielle', 'lastName' => 'Collins'),
     array('firstName' => 'Mitchell', 'lastName' => 'Simoens'),
     array('firstName' => 'Tommy',    'lastName' => 'Maintz'),
     array('firstName' => 'Rob',      'lastName' => 'Dougan'),

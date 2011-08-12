@@ -35,6 +35,7 @@ Ext.setup({
                             },
 
                             data: [
+                                { firstName : 'Danielle', lastName : 'Collins'  },
                                 { firstName : 'Mitchell', lastName : 'Simoens'  },
                                 { firstName : 'Tommy',    lastName : 'Maintz'   },
                                 { firstName : 'Rob',      lastName : 'Dougan'   },
